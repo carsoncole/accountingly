@@ -1,0 +1,10 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+expense_account:
+  type: ExpenseAccount
+  name: Cable Company Expense
+  entity: ajax_company
+equity_account:
+  type: EquityAccount
+  name: Equity
+  entity: ajax_company

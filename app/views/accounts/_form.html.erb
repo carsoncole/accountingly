@@ -1,0 +1,60 @@
+<% if @account.new_record? %>
+  <%= form_for [entity, @account], as: :account, class: "contents" do |a| %>
+    <%= render "shared/error_messages", target: @account %>
+    
+    <div class="my-5">
+      <%= a.label :name, class: "block text-sm font-medium text-gray-700" %>
+      <%= a.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:name].none?, "border-red-400 focus:outline-red-600": @account.errors[:name].any?}] %>
+    </div>
+    
+    <div class="my-5">
+      <%= a.label "Type", class: "block text-sm font-medium text-gray-700" %>
+      <%= a.select :type, Account::TYPES, {}, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:type].none?, "border-red-400 focus:outline-red-600": @account.errors[:type].any?}] %>
+    </div>
+    
+    <div class="my-5">
+      <%= a.label :rank, class: "block text-sm font-medium text-gray-700" %>
+      <%= a.text_field :rank, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:rank].none?, "border-red-400 focus:outline-red-600": @account.errors[:rank].any?}] %>
+    </div>
+    
+    <div class="my-5">
+      <%= a.label "Note", class: "block text-sm font-medium text-gray-700" %>
+      <%= a.text_field :note, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:note].none?, "border-red-400 focus:outline-red-600": @account.errors[:note].any?}] %>
+    </div>
+    
+    <div class="inline">
+      <%= a.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  <% end %>
+
+<% else %>
+  <%= form_for [entity, @account], url: entity_account_path(entity, @account), as: :account, method: :put, class: "contents" do |a| %>
+    <%= render "shared/error_messages", target: @account %>
+    
+    <div class="my-5">
+      <%= a.label :name, class: "block text-sm font-medium text-gray-700" %>
+      <%= a.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:name].none?, "border-red-400 focus:outline-red-600": @account.errors[:name].any?}] %>
+    </div>
+    
+    <div class="my-5">
+      <%= a.label "Type", class: "block text-sm font-medium text-gray-700" %>
+      <div class="block shadow-sm rounded-md border px-3 py-2 mt-2 w-full bg-gray-100 border-gray-300">
+        <%= a.object.type %>
+      </div>
+    </div>
+    
+    <div class="my-5">
+      <%= a.label :rank, class: "block text-sm font-medium text-gray-700" %>
+      <%= a.text_field :rank, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:rank].none?, "border-red-400 focus:outline-red-600": @account.errors[:rank].any?}] %>
+    </div>
+    
+    <div class="my-5">
+      <%= a.label "Note", class: "block text-sm font-medium text-gray-700" %>
+      <%= a.text_field :note, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:note].none?, "border-red-400 focus:outline-red-600": @account.errors[:note].any?}] %>
+    </div>
+    
+    <div class="inline">
+      <%= a.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  <% end %>
+<% end %>

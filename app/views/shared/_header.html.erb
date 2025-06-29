@@ -1,0 +1,38 @@
+<header class="bg-white shadow-sm border-b border-gray-200 fixed top-0 left-0 right-0 z-50">
+  <div class="container mx-auto px-5">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center space-x-4">
+        <h1 class="text-xl font-bold text-gray-900">
+          <%= link_to "Accountingly", root_path, class: "hover:text-blue-600 transition-colors" %>
+        </h1>
+        
+        <% if authenticated? %>
+          <div class="flex items-center space-x-2">
+            <span class="text-gray-400">/</span>
+            <%= link_to "Entities", entities_path, class: "text-gray-600 hover:text-blue-600 transition-colors" %>
+          </div>
+        <% end %>
+        
+        <% if entity.present? && entity.persisted? %>
+          <div class="flex items-center space-x-2">
+            <span class="text-gray-400">/</span>
+            <span class="text-lg font-medium text-gray-700"><%= entity.name %></span>
+            <span class="text-gray-400">/</span>
+            <%= link_to "Accounts", entity_accounts_path(entity), class: "text-gray-600 hover:text-blue-600 transition-colors" %>
+            <span class="text-gray-400">|</span>
+            <%= link_to "Transactions", entity_transactions_path(entity), class: "text-gray-600 hover:text-blue-600 transition-colors" %>
+          </div>
+        <% end %>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <% if authenticated? && Current.user.present? %>
+          <div class="flex items-center space-x-2 text-sm text-gray-600">
+            <span>Welcome, <%= Current.user.email_address %></span>
+            <%= button_to "Sign out", session_path, method: :delete, class: "text-gray-500 hover:text-gray-700 transition-colors" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</header> 

@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  entity: ajax_company
+  date: 2025-06-26
+  description: MyString
+
+two:
+  entity: ajax_company
+  date: 2025-06-27
+  description: MyString
+  created_by: 1
+  updated_by: 1
+
+three:
+  entity: ajax_company
+  date: 2025-06-28
+  description: MyString
+  created_by: 1
+  updated_by: 1
+four:
+  entity: ajax_company
+  date: 2020-01-10
+  created_by: 1
+  updated_by: 1

@@ -18,7 +18,7 @@
     <% if @entities.any? %>
       <div class="divide-y divide-gray-200">
         <% @entities.each do |entity| %>
-          <div class="entity flex items-center justify-between p-6 hover:bg-gray-50">
+          <div class="entity flex items-center justify-between p-6">
             <div class="flex items-center space-x-4">
               <div class="flex-shrink-0">
                 <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
@@ -27,7 +27,7 @@
               </div>
               <div>
                 <h3 class="text-lg font-medium text-gray-900">
-                  <%= link_to entity.name, entity_transactions_path(entity), class: "hover:text-blue-600" %>
+                  <%= link_to entity.name, entity_path(entity), class: "hover:text-blue-600" %>
                 </h3>
                 <p class="text-sm text-gray-500">
                   <%= pluralize(entity.accounts.count, 'account') %> • 
@@ -36,13 +36,14 @@
               </div>
             </div>
             
-            <div class="flex items-center space-x-2">
+            <div class="flex items-center space-x-3">
+              <%= link_to "Transactions", entity_transactions_path(entity), class: "text-sm text-gray-600 hover:text-blue-600" %>
               <% if Current.user.administrator?(entity) %>
                 <%= link_to "Edit", edit_entity_path(entity), class: "text-sm text-gray-600 hover:text-blue-600" %>
                 <%= button_to "Archive", entity_path(entity), 
                     method: :delete, 
-                    class: "text-sm text-red-600 hover:text-red-800 py-2 px-4",
-                    data: { turbo_confirm: "Are you sure you want to archive this entity?" } %>
+                    class: "text-sm text-red-600 hover:text-red-800",
+                    data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to archive this entity?", data_turbo: false } %>
               <% end %>
             </div>
           </div>

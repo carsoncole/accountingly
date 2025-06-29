@@ -23,7 +23,7 @@ module ActiveSupport
     def sign_in_as(user, fixture = false)
       visit new_session_url
       fill_in "email_address", with: user.email_address
-      fill_in "password", with: (fixture ? "password" : user.password)
+      fill_in "password", with: (fixture ? "password1234567890" : user.password)
       click_button "Sign in"
       sleep 1
     end

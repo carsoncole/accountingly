@@ -107,4 +107,50 @@
       </div>
     </div>
   <% end %>
+
+  <!-- Archive Date Ranges -->
+  <% if @entity.archive_dates.any? %>
+    <div class="mt-8 bg-white shadow-sm rounded-lg overflow-hidden">
+      <div class="px-6 py-4 border-b border-gray-200">
+        <h3 class="text-lg font-medium text-gray-900">Archive Date Ranges</h3>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-200">
+          <thead class="bg-gray-50">
+            <tr>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Start Date</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">End Date</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duration</th>
+              <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-gray-200">
+            <% @entity.archive_dates.order(:start_date).each do |archive_date| %>
+              <tr class="hover:bg-gray-50">
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <%= archive_date.start_date.strftime("%B %d, %Y") %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <%= archive_date.end_date.strftime("%B %d, %Y") %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <%= pluralize((archive_date.end_date - archive_date.start_date).to_i, 'day') %>
+                </td>
+                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                  <%= archive_date.created_at.strftime("%B %d, %Y") %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  <% else %>
+    <div class="mt-8 bg-white shadow-sm rounded-lg p-6">
+      <div class="text-center">
+        <h3 class="text-lg font-medium text-gray-900 mb-2">Archive Date Ranges</h3>
+        <p class="text-gray-500">No archive date ranges have been set for this entity.</p>
+      </div>
+    </div>
+  <% end %>
 </div>

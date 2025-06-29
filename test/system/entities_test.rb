@@ -49,33 +49,33 @@ class EntitiesTest < ApplicationSystemTestCase
   end
 
   #FIXME: This test is failing
-  # test "should edit entity" do
-  #   # Create an entity first
-  #   entity = Entity.create!(name: "Original Name")
-  #   AdministratorAccess.create!(user_id: @user.id, entity_id: entity.id, type: "AdministratorAccess")
-  #   visit entities_url
+  test "should edit entity" do
+    # Create an entity first
+    entity = Entity.create!(name: "Original Name")
+    AdministratorAccess.create!(user_id: @user.id, entity_id: entity.id, type: "AdministratorAccess")
+    visit entities_url
     
-  #   # Find and click the edit link for the entity
-  #   within("div.entity", text: "Original Name") do
-  #     edit_link = find("a", text: "Edit")
-  #     edit_link.click
-  #   end
+    # Find and click the edit link for the entity
+    within("div.entity", text: "Original Name") do
+      edit_link = find("a", text: "Edit")
+      edit_link.click
+    end
     
-  #   # Check that we're on the edit form
-  #   assert_selector "h1", text: "Edit Entity"
+    # Check that we're on the edit form
+    assert_selector "h1", text: "Edit Entity"
     
-  #   # Update the entity name
-  #   fill_in "Name", with: "Updated Name"
+    # Update the entity name
+    fill_in "Name", with: "Updated Name"
     
-  #   # Submit the form
-  #   click_on "Update Entity"
+    # Submit the form
+    click_on "Update Entity"
     
-  #   # Should be redirected to the entity show page with success message
-  #   assert_text "Entity was successfully updated"
+    # Should be redirected to the entity show page with success message
+    assert_text "Entity was successfully updated"
     
-  #   # Should show the updated entity name
-  #   assert_text "Updated Name"
-  # end
+    # Should show the updated entity name
+    assert_text "Updated Name"
+  end
 
   test "should not edit entity with invalid data" do
     # Create an entity first
@@ -86,7 +86,7 @@ class EntitiesTest < ApplicationSystemTestCase
     
     # Find and click the edit link for the entity
     within("div.entity", text: "Original Name") do
-      click_on "Edit"
+      click_link "Edit"
     end
     
     # Clear the name field
@@ -109,11 +109,10 @@ class EntitiesTest < ApplicationSystemTestCase
     
     # Find and click the archive button for the entity
     within("div.entity", text: "Entity to Archive") do
-      accept_confirm do
-        click_on "Archive"
-      end
+      click_button "Archive"
     end
-    
+    accept_confirm
+
     # Should be redirected to entities index with success message
     assert_text "Entity was successfully archived"
     
@@ -132,7 +131,7 @@ class EntitiesTest < ApplicationSystemTestCase
     click_on "Test Entity"
     
     # Should be redirected to the entity's transactions page
-    assert_current_path entity_transactions_path(entity)
+    assert_current_path entity_path(entity)
   end
 
   test "should display empty state when no entities exist" do

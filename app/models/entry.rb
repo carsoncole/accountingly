@@ -1,5 +1,5 @@
 class Entry < ActiveRecord::Base
-  belongs_to :transaction_new, foreign_key: 'transaction_id', class_name: 'Transaction'#, counter_cache: true # done this way to avoid transaction name warning
+  belongs_to :transaction_new, foreign_key: 'transaction_id', class_name: 'Transaction', counter_cache: true # done this way to avoid transaction name warning
   belongs_to :account
   has_one :entity, :through => :account
   validates_numericality_of :amount

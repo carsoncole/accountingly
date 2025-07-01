@@ -1,12 +1,42 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  transaction_new: one
+expense_entry:
+  transaction_new: expense_transaction
   account: expense_account
   amount: 10
   balance: 10
-two:
-  transaction_new: two
+cash_entry:
+  transaction_new: expense_transaction
+  account: asset_account
+  amount: -10
+  balance: -10
+equity_entry:
+  transaction_new: expense_transaction
+  account: equity_account
+  amount: -10
+  balance: 10
+single_entry:
+  transaction_new: single_entry_transaction
   account: expense_account
-  amount: 25.50
-  balance: 35.5
+  amount: 10
+  balance: 10
+buns_1_entry:
+  transaction_new: hot_dog_one
+  account: hot_dog_expense_account
+  amount: 10
+  balance: 10
+hot_dogs_1_entry:
+  transaction_new: hot_dog_one
+  account: hot_dog_expense_account
+  amount: 10
+  balance: 10
+hot_dogs_2_entry:
+  transaction_new: hot_dog_one
+  account: hot_dog_bank_account
+  amount: -10
+  balance: -10
+hot_dogs_3_entry:
+  transaction_new: hot_dog_one
+  account: hot_dog_equity_account
+  amount: -10
+  balance: -10

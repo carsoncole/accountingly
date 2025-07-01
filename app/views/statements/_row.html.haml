@@ -1,0 +1,4 @@
+%tr
+  %th= row[0]
+  %td
+    = number_with_precision(row[2].to_s, :delimiter => ",", :precision => 2)

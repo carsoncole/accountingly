@@ -3,7 +3,7 @@ require "test_helper"
 class EntityTest < ActiveSupport::TestCase
   test "should be active" do
     assert_not entities(:ajax_company).is_archived?
-    assert_equal 2, Entity.active.count
+    assert_equal 3, Entity.active.count
   end
 
   test "should be archived" do

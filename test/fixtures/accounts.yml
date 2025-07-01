@@ -4,7 +4,39 @@ expense_account:
   type: ExpenseAccount
   name: Cable Company Expense
   entity: ajax_company
+income_account:
+  type: IncomeAccount
+  name: Profits
+  entity: ajax_company
+asset_account:
+  type: AssetAccount
+  name: Ajax Bank Account
+  entity: ajax_company
+liability_account:
+  type: LiabilityAccount
+  name: Ajax Loan Account
+  entity: ajax_company
 equity_account:
   type: EquityAccount
   name: Equity
   entity: ajax_company
+hot_dog_equity_account:
+  type: EquityAccount
+  name: Equity
+  entity: hot_dog_company
+hot_dog_expense_account:
+  type: ExpenseAccount
+  name: Commercial food company
+  entity: hot_dog_company
+hot_dog_income_account:
+  type: IncomeAccount
+  name: Hot Dog Income
+  entity: hot_dog_company
+hot_dog_bank_account:
+  type: AssetAccount
+  name: Hot Dog Bank Account
+  entity: hot_dog_company
+hot_dog_inventory_account:
+  type: AssetAccount
+  name: Hot Dog Inventory
+  entity: hot_dog_company

@@ -1,0 +1,175 @@
+<% content_for :title, "#{@entity.name} - Balance Sheet" %>
+
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <% if alert.present? %>
+    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-md inline-block" id="alert"><%= alert %></p>
+  <% end %>
+
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-2xl font-bold text-gray-900">
+      <%= @entity.name %> - Balance Sheet
+    </h1>
+    <%= link_to "Back to Statements", entity_statements_path(@entity), class: "text-blue-600 hover:text-blue-800 transition-colors" %>
+  </div>
+
+  <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              For the period
+            </th>
+            <% @balance_sheets.each do |s| %>
+              <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                <%= format_date_short(s.from_date) %>
+                <br>
+                to
+                <br>
+                <%= format_date_short(s.to_date) %>
+              </th>
+            <% end %>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <!-- Assets Section -->
+          <tr class="bg-blue-50">
+            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">
+              <h2 class="text-lg font-bold text-blue-900">Assets</h2>
+            </th>
+            <% @balance_sheets.each do |s| %>
+              <td class="px-6 py-4"></td>
+            <% end %>
+          </tr>
+          
+          <% @asset_accounts.each do |account, value| %>
+            <tr class="hover:bg-gray-50">
+              <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">
+                <%= link_to account.name, entity_account_entries_path(@entity, account.id), class: "text-blue-600 hover:text-blue-800 transition-colors" %>
+              </th>
+              <% @balance_sheets.each do |s| %>
+                <td class="px-6 py-4 text-right text-sm text-gray-900">
+                  <%= number_with_precision(s.account_balances[account], delimiter: ",", precision: 2) %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+          
+          <!-- Total Assets -->
+          <tr class="bg-blue-100 border-t border-blue-200">
+            <th class="px-6 py-4 text-left text-sm font-bold text-blue-900">
+              Total assets
+            </th>
+            <% @balance_sheets.each do |s| %>
+              <td class="px-6 py-4 text-right text-sm font-bold text-blue-900">
+                <%= number_with_precision(Account.total_assets({entity_id: @entity.id, date: s.to_date}), delimiter: ",", precision: 2) %>
+              </td>
+            <% end %>
+          </tr>
+          
+          <!-- Spacer -->
+          <tr>
+            <td class="px-6 py-2">&nbsp;</td>
+            <% @balance_sheets.each do |s| %>
+              <td class="px-6 py-2"></td>
+            <% end %>
+          </tr>
+          
+          <!-- Liabilities Section -->
+          <tr class="bg-red-50">
+            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">
+              <h2 class="text-lg font-bold text-red-900">Liabilities</h2>
+            </th>
+            <% @balance_sheets.each do |s| %>
+              <td class="px-6 py-4"></td>
+            <% end %>
+          </tr>
+          
+          <% @liability_accounts.each do |account, value| %>
+            <tr class="hover:bg-gray-50">
+              <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">
+                <%= link_to account.name, entity_account_entries_path(@entity, account.id), class: "text-blue-600 hover:text-blue-800 transition-colors" %>
+              </th>
+              <% @balance_sheets.each do |s| %>
+                <td class="px-6 py-4 text-right text-sm text-gray-900">
+                  <%= number_with_precision(s.account_balances[account], delimiter: ",", precision: 2) %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+          
+          <!-- Total Liabilities -->
+          <tr class="bg-red-100 border-t border-red-200">
+            <th class="px-6 py-4 text-left text-sm font-bold text-red-900">
+              Total liabilities
+            </th>
+            <% @balance_sheets.each do |s| %>
+              <td class="px-6 py-4 text-right text-sm font-bold text-red-900">
+                <%= number_with_precision(Account.total_liabilities({entity_id: @entity.id, date: s.to_date}), delimiter: ",", precision: 2) %>
+              </td>
+            <% end %>
+          </tr>
+          
+          <!-- Spacer -->
+          <tr>
+            <td class="px-6 py-2">&nbsp;</td>
+            <% @balance_sheets.each do |s| %>
+              <td class="px-6 py-2"></td>
+            <% end %>
+          </tr>
+          
+          <!-- Equity Section -->
+          <tr class="bg-green-50">
+            <th class="px-6 py-4 text-left text-sm font-semibold text-gray-900">
+              <h2 class="text-lg font-bold text-green-900">Equity</h2>
+            </th>
+            <% @balance_sheets.each do |s| %>
+              <td class="px-6 py-4"></td>
+            <% end %>
+          </tr>
+          
+          <% @equity_accounts.each do |account, value| %>
+            <tr class="hover:bg-gray-50">
+              <th class="px-6 py-4 text-left text-sm font-medium text-gray-900">
+                <%= link_to truncate(account.name, length: 37), entity_account_entries_path(@entity, account.id), class: "text-blue-600 hover:text-blue-800 transition-colors" %>
+              </th>
+              <% @balance_sheets.each do |s| %>
+                <td class="px-6 py-4 text-right text-sm text-gray-900">
+                  <%= number_with_precision(s.account_balances[account], delimiter: ",", precision: 2) %>
+                </td>
+              <% end %>
+            </tr>
+          <% end %>
+          
+          <!-- Total Equity -->
+          <tr class="bg-green-100 border-t border-green-200">
+            <th class="px-6 py-4 text-left text-sm font-bold text-green-900">
+              Total equity
+            </th>
+            <% @balance_sheets.each do |s| %>
+              <td class="px-6 py-4 text-right text-sm font-bold text-green-900">
+                <%= number_with_precision(Account.total_equity({entity_id: @entity.id, date: s.to_date}), delimiter: ",", precision: 2) %>
+              </td>
+            <% end %>
+          </tr>
+          
+          <!-- Total Liabilities and Equity -->
+          <tr class="bg-gray-100 border-t-2 border-gray-300">
+            <th class="px-6 py-4 text-left text-sm font-bold text-gray-900">
+              Total liabilities and equity
+            </th>
+            <% @balance_sheets.each do |s| %>
+              <td class="px-6 py-4 text-right text-sm font-bold text-gray-900">
+                <%= number_with_precision(Account.total_liabilities_and_equity({entity_id: @entity.id, date: s.to_date}), delimiter: ",", precision: 2) %>
+              </td>
+            <% end %>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div> 

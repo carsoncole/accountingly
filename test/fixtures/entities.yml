@@ -12,3 +12,7 @@ archived_company:
   name: Archived Company
   retained_earnings_account: equity_account
   is_archived: true
+
+hot_dog_company:
+  name: Hot Dog Company
+  retained_earnings_account: hot_dog_equity_account

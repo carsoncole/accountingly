@@ -12,6 +12,13 @@ Rails.application.routes.draw do
     resources :transactions do
       resources :entries
     end
+    
+    resources :statements, only: [:index] do
+      collection do
+        get :balance_sheet
+        get :income_statement
+      end
+    end
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

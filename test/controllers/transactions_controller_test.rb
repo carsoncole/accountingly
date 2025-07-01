@@ -12,12 +12,12 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get show" do
-    get entity_transaction_url(@entity, transactions(:one))
+    get entity_transaction_url(@entity, transactions(:expense_transaction))
     assert_response :success
   end
 
   test "should get edit" do
-    get edit_entity_transaction_url(@entity, transactions(:one))
+    get edit_entity_transaction_url(@entity, transactions(:expense_transaction))
     assert_response :success
   end
 
@@ -36,14 +36,17 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
     post entity_transactions_url(@entity), params: { 
       transaction: { 
         date: "2025-06-28", description: "New Transaction",
-        entries_attributes: { "0" => { account_id: accounts(:expense_account).id, amount: 100 } } 
+        entries_attributes: { 
+          "0" => { account_id: accounts(:expense_account).id, amount: 100 },
+          "1" => { account_id: accounts(:asset_account).id, amount: -100 }
+        } 
         }
       }
     assert_redirected_to entity_transaction_url(@entity, Transaction.last)
   end
 
   test "should destroy" do
-    delete entity_transaction_url(@entity, transactions(:one))
+    delete entity_transaction_url(@entity, transactions(:expense_transaction))
     assert_redirected_to entity_transactions_url(@entity)
   end
 end

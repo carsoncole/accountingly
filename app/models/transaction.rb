@@ -5,28 +5,28 @@ class Transaction < ApplicationRecord
   accepts_nested_attributes_for :entries, :allow_destroy => true, :reject_if => :all_blank
   belongs_to :entity
   before_validation :remove_blank_entries!
-  before_save :balanced?
-  before_save :not_in_archived_period?
-  before_destroy :not_in_archived_period?
-  validates :entity_id, :description, :date, :created_by, :updated_by, presence: true
-
+  validate :must_be_balanced
+  validate :not_in_archived_period
+  before_destroy :not_in_archived_period
+  validates :entity_id, :description, :date, presence: true
 
   def balanced?
-    total = 0
-    entries.each { |e| total += e.account.addition_or_subtraction * e.amount unless e.account.name == 'Retained earnings' }
-    if total == 0
+    if total_balance == 0
       return true
     else
-      errors[:base] << "Does not balance"
       return false
     end
+  end
 
+  def total_balance
+    total = 0
+    entries.each { |e| total += e.account.addition_or_subtraction * e.amount unless e.account.name == 'Retained earnings' }
+    return total
   end
 
   def archived?
-    false
-    # ArchiveDate.find(:first, :conditions => ["entity_id = ? AND start_date <= ? AND end_date >= ?",
-    #     entity_id, date, date]).nil? ? false : true
+    ArchiveDate.where("entity_id= ? AND start_date <= ? AND end_date >= ?",
+        entity_id, date, date).any? ? true : false
   end
 
   # Temporary method (Trash at some point) to fix equity postings
@@ -49,10 +49,15 @@ class Transaction < ApplicationRecord
 
   private
 
-  def not_in_archived_period?
+  def must_be_balanced
+    if !balanced?
+      errors.add(:base, "Transaction is not balanced.")
+    end
+  end
+
+  def not_in_archived_period
     if archived?
-      errors[:base] << "Transactions can't be created/updated/destroyed for this date as its during an archived period."
-      return false
+      errors.add(:date, "is within an archived period.")
     end
   end
 

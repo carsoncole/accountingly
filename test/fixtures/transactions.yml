@@ -1,25 +1,31 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+expense_transaction:
   entity: ajax_company
   date: 2025-06-26
   description: MyString
 
-two:
+single_entry_transaction:
   entity: ajax_company
   date: 2025-06-27
   description: MyString
-  created_by: 1
-  updated_by: 1
 
-three:
+archived_transaction:
   entity: ajax_company
-  date: 2025-06-28
+  date: 2020-06-28
   description: MyString
-  created_by: 1
-  updated_by: 1
+
 four:
   entity: ajax_company
   date: 2020-01-10
-  created_by: 1
-  updated_by: 1
+  description: MyString
+
+hot_dog_one:
+  entity: hot_dog_company
+  date: 2025-01-21
+  description: Hot dogs
+
+hot_dog_two:
+  entity: hot_dog_company
+  date: 2025-01-25
+  description: Sales 

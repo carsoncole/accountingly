@@ -24,6 +24,19 @@ class Transaction < ApplicationRecord
     return total
   end
 
+  def primary_entry_amount
+    # First priority: expense or income accounts
+    expense_income_entries = entries.joins(:account).where(accounts: { type: ['ExpenseAccount', 'IncomeAccount'] }).order(:id)
+    return expense_income_entries.first.amount if expense_income_entries.any?
+    
+    # Second priority: liability or asset accounts
+    liability_asset_entries = entries.joins(:account).where(accounts: { type: ['LiabilityAccount', 'AssetAccount'] }).order(:id)
+    return liability_asset_entries.first.amount if liability_asset_entries.any?
+    
+    # Fallback: return the first entry amount
+    entries.first&.amount || 0
+  end
+
   def archived?
     ArchiveDate.where("entity_id= ? AND start_date <= ? AND end_date >= ?",
         entity_id, date, date).any? ? true : false

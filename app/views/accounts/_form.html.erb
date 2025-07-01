@@ -3,27 +3,27 @@
     <%= render "shared/error_messages", target: @account %>
     
     <div class="my-5">
-      <%= a.label :name, class: "block text-sm font-medium text-gray-700" %>
-      <%= a.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:name].none?, "border-red-400 focus:outline-red-600": @account.errors[:name].any?}] %>
+      <%= a.label :name, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+      <%= a.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400": @account.errors[:name].none?, "border-red-400 dark:border-red-500 focus:outline-red-600 dark:focus:outline-red-400": @account.errors[:name].any?}] %>
     </div>
     
     <div class="my-5">
-      <%= a.label "Type", class: "block text-sm font-medium text-gray-700" %>
-      <%= a.select :type, Account::TYPES, {}, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:type].none?, "border-red-400 focus:outline-red-600": @account.errors[:type].any?}] %>
+      <%= a.label "Type", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+      <%= a.select :type, Account::TYPES, {}, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400": @account.errors[:type].none?, "border-red-400 dark:border-red-500 focus:outline-red-600 dark:focus:outline-red-400": @account.errors[:type].any?}] %>
     </div>
     
     <div class="my-5">
-      <%= a.label :rank, class: "block text-sm font-medium text-gray-700" %>
-      <%= a.text_field :rank, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:rank].none?, "border-red-400 focus:outline-red-600": @account.errors[:rank].any?}] %>
+      <%= a.label :rank, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+      <%= a.text_field :rank, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400": @account.errors[:rank].none?, "border-red-400 dark:border-red-500 focus:outline-red-600 dark:focus:outline-red-400": @account.errors[:rank].any?}] %>
     </div>
     
     <div class="my-5">
-      <%= a.label "Note", class: "block text-sm font-medium text-gray-700" %>
-      <%= a.text_field :note, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:note].none?, "border-red-400 focus:outline-red-600": @account.errors[:note].any?}] %>
+      <%= a.label "Note", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+      <%= a.text_field :note, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400": @account.errors[:note].none?, "border-red-400 dark:border-red-500 focus:outline-red-600 dark:focus:outline-red-400": @account.errors[:note].any?}] %>
     </div>
     
     <div class="inline">
-      <%= a.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+      <%= a.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer transition-colors" %>
     </div>
   <% end %>
 
@@ -32,29 +32,29 @@
     <%= render "shared/error_messages", target: @account %>
     
     <div class="my-5">
-      <%= a.label :name, class: "block text-sm font-medium text-gray-700" %>
-      <%= a.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:name].none?, "border-red-400 focus:outline-red-600": @account.errors[:name].any?}] %>
+      <%= a.label :name, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+      <%= a.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400": @account.errors[:name].none?, "border-red-400 dark:border-red-500 focus:outline-red-600 dark:focus:outline-red-400": @account.errors[:name].any?}] %>
     </div>
     
     <div class="my-5">
-      <%= a.label "Type", class: "block text-sm font-medium text-gray-700" %>
-      <div class="block shadow-sm rounded-md border px-3 py-2 mt-2 w-full bg-gray-100 border-gray-300">
+      <%= a.label "Type", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+      <div class="block shadow-sm rounded-md border px-3 py-2 mt-2 w-full bg-gray-100 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white">
         <%= a.object.type %>
       </div>
     </div>
     
     <div class="my-5">
-      <%= a.label :rank, class: "block text-sm font-medium text-gray-700" %>
-      <%= a.text_field :rank, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:rank].none?, "border-red-400 focus:outline-red-600": @account.errors[:rank].any?}] %>
+      <%= a.label :rank, class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+      <%= a.text_field :rank, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400": @account.errors[:rank].none?, "border-red-400 dark:border-red-500 focus:outline-red-600 dark:focus:outline-red-400": @account.errors[:rank].any?}] %>
     </div>
     
     <div class="my-5">
-      <%= a.label "Note", class: "block text-sm font-medium text-gray-700" %>
-      <%= a.text_field :note, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": @account.errors[:note].none?, "border-red-400 focus:outline-red-600": @account.errors[:note].any?}] %>
+      <%= a.label "Note", class: "block text-sm font-medium text-gray-700 dark:text-gray-300" %>
+      <%= a.text_field :note, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full bg-white dark:bg-gray-800 text-gray-900 dark:text-white", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400": @account.errors[:note].none?, "border-red-400 dark:border-red-500 focus:outline-red-600 dark:focus:outline-red-400": @account.errors[:note].any?}] %>
     </div>
     
     <div class="inline">
-      <%= a.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+      <%= a.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer transition-colors" %>
     </div>
   <% end %>
 <% end %>

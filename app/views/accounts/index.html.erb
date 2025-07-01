@@ -2,35 +2,35 @@
 
 <section id="accounts" class="w-full">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <p class="py-2 px-3 bg-green-50 dark:bg-green-900/20 mb-5 text-green-500 dark:text-green-400 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
 
   <div class="mb-6">
-    <%= link_to "New account", new_entity_account_path(@entity), class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium" %>
+    <%= link_to "New account", new_entity_account_path(@entity), class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium transition-colors" %>
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
     <!-- Assets -->
-    <div class="bg-white rounded-lg shadow p-6">
-      <h3 class="text-lg font-semibold mb-4 text-gray-900">Assets</h3>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Assets</h3>
       <div class="overflow-x-auto">
         <table class="min-w-full">
           <thead>
-            <tr class="border-b border-gray-200">
-              <th class="text-left py-2 px-1 text-sm font-medium text-gray-700">Account</th>
-              <th class="text-right py-2 px-1 text-sm font-medium text-gray-700">Balance</th>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th class="text-left py-2 px-1 text-sm font-medium text-gray-700 dark:text-gray-300">Account</th>
+              <th class="text-right py-2 px-1 text-sm font-medium text-gray-700 dark:text-gray-300">Balance</th>
             </tr>
           </thead>
           <tbody>
             <% @asset_accounts.each do |account| %>
-              <tr class="border-b border-gray-100">
+              <tr class="border-b border-gray-100 dark:border-gray-700">
                 <td class="py-2 px-1">
                   <div class="flex items-center space-x-2">
-                    <%= link_to account.name, entity_account_entries_path(@entity, account), class: "text-blue-600 hover:text-blue-800 font-medium" %>
-                    <%= link_to "(Edit)", entity_account_path(@entity, account), class: "text-sm text-gray-500 hover:text-gray-700" %>
+                    <%= link_to account.name, entity_account_entries_path(@entity, account), class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors" %>
+                    <%= link_to "(Edit)", entity_account_path(@entity, account), class: "text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors" %>
                   </div>
                 </td>
-                <td class="text-right py-2 px-1 font-mono text-sm">
+                <td class="text-right py-2 px-1 font-mono text-sm text-gray-900 dark:text-white">
                   <%= number_to_currency(account.balance) %>
                 </td>
               </tr>
@@ -41,26 +41,26 @@
     </div>
 
     <!-- Liabilities -->
-    <div class="bg-white rounded-lg shadow p-6">
-      <h3 class="text-lg font-semibold mb-4 text-gray-900">Liabilities</h3>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Liabilities</h3>
       <div class="overflow-x-auto">
         <table class="min-w-full">
           <thead>
-            <tr class="border-b border-gray-200">
-              <th class="text-left py-2 px-1 text-sm font-medium text-gray-700">Account</th>
-              <th class="text-right py-2 px-1 text-sm font-medium text-gray-700">Balance</th>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th class="text-left py-2 px-1 text-sm font-medium text-gray-700 dark:text-gray-300">Account</th>
+              <th class="text-right py-2 px-1 text-sm font-medium text-gray-700 dark:text-gray-300">Balance</th>
             </tr>
           </thead>
           <tbody>
             <% @liability_accounts.each do |account| %>
-              <tr class="border-b border-gray-100">
+              <tr class="border-b border-gray-100 dark:border-gray-700">
                 <td class="py-2 px-1">
                   <div class="flex items-center space-x-2">
-                    <%= link_to account.name, entity_account_entries_path(@entity, account), class: "text-blue-600 hover:text-blue-800 font-medium" %>
-                    <%= link_to "(Edit)", entity_account_path(@entity, account), class: "text-sm text-gray-500 hover:text-gray-700" %>
+                    <%= link_to account.name, entity_account_entries_path(@entity, account), class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors" %>
+                    <%= link_to "(Edit)", entity_account_path(@entity, account), class: "text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors" %>
                   </div>
                 </td>
-                <td class="text-right py-2 px-1 font-mono text-sm">
+                <td class="text-right py-2 px-1 font-mono text-sm text-gray-900 dark:text-white">
                   <%= number_to_currency(account.balance) %>
                 </td>
               </tr>
@@ -71,26 +71,26 @@
     </div>
 
     <!-- Equity -->
-    <div class="bg-white rounded-lg shadow p-6">
-      <h3 class="text-lg font-semibold mb-4 text-gray-900">Equity</h3>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Equity</h3>
       <div class="overflow-x-auto">
         <table class="min-w-full">
           <thead>
-            <tr class="border-b border-gray-200">
-              <th class="text-left py-2 px-1 text-sm font-medium text-gray-700">Account</th>
-              <th class="text-right py-2 px-1 text-sm font-medium text-gray-700">Balance</th>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th class="text-left py-2 px-1 text-sm font-medium text-gray-700 dark:text-gray-300">Account</th>
+              <th class="text-right py-2 px-1 text-sm font-medium text-gray-700 dark:text-gray-300">Balance</th>
             </tr>
           </thead>
           <tbody>
             <% @equity_accounts.each do |account| %>
-              <tr class="border-b border-gray-100">
+              <tr class="border-b border-gray-100 dark:border-gray-700">
                 <td class="py-2 px-1">
                   <div class="flex items-center space-x-2">
-                    <%= link_to account.name, entity_account_entries_path(@entity, account), class: "text-blue-600 hover:text-blue-800 font-medium" %>
-                    <%= link_to "(Edit)", entity_account_path(@entity, account), class: "text-sm text-gray-500 hover:text-gray-700" %>
+                    <%= link_to account.name, entity_account_entries_path(@entity, account), class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors" %>
+                    <%= link_to "(Edit)", entity_account_path(@entity, account), class: "text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors" %>
                   </div>
                 </td>
-                <td class="text-right py-2 px-1 font-mono text-sm">
+                <td class="text-right py-2 px-1 font-mono text-sm text-gray-900 dark:text-white">
                   <%= number_to_currency(account.balance) %>
                 </td>
               </tr>
@@ -103,26 +103,26 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <!-- Income -->
-    <div class="bg-white rounded-lg shadow p-6">
-      <h3 class="text-lg font-semibold mb-4 text-gray-900">Income</h3>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Income</h3>
       <div class="overflow-x-auto">
         <table class="min-w-full">
           <thead>
-            <tr class="border-b border-gray-200">
-              <th class="text-left py-2 px-1 text-sm font-medium text-gray-700">Account</th>
-              <th class="text-right py-2 px-1 text-sm font-medium text-gray-700">Balance</th>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th class="text-left py-2 px-1 text-sm font-medium text-gray-700 dark:text-gray-300">Account</th>
+              <th class="text-right py-2 px-1 text-sm font-medium text-gray-700 dark:text-gray-300">Balance</th>
             </tr>
           </thead>
           <tbody>
             <% @income_accounts.each do |account| %>
-              <tr class="border-b border-gray-100">
+              <tr class="border-b border-gray-100 dark:border-gray-700">
                 <td class="py-2 px-1">
                   <div class="flex items-center space-x-2">
-                    <%= link_to account.name, entity_account_entries_path(@entity, account), class: "text-blue-600 hover:text-blue-800 font-medium" %>
-                    <%= link_to "(Edit)", entity_account_path(@entity, account), class: "text-sm text-gray-500 hover:text-gray-700" %>
+                    <%= link_to account.name, entity_account_entries_path(@entity, account), class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors" %>
+                    <%= link_to "(Edit)", entity_account_path(@entity, account), class: "text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors" %>
                   </div>
                 </td>
-                <td class="text-right py-2 px-1 font-mono text-sm">
+                <td class="text-right py-2 px-1 font-mono text-sm text-gray-900 dark:text-white">
                   <%= number_to_currency(account.balance) %>
                 </td>
               </tr>
@@ -133,26 +133,26 @@
     </div>
 
     <!-- Expense -->
-    <div class="bg-white rounded-lg shadow p-6">
-      <h3 class="text-lg font-semibold mb-4 text-gray-900">Expense</h3>
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Expense</h3>
       <div class="overflow-x-auto">
         <table class="min-w-full">
           <thead>
-            <tr class="border-b border-gray-200">
-              <th class="text-left py-2 px-1 text-sm font-medium text-gray-700">Account</th>
-              <th class="text-right py-2 px-1 text-sm font-medium text-gray-700">Balance</th>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <th class="text-left py-2 px-1 text-sm font-medium text-gray-700 dark:text-gray-300">Account</th>
+              <th class="text-right py-2 px-1 text-sm font-medium text-gray-700 dark:text-gray-300">Balance</th>
             </tr>
           </thead>
           <tbody>
             <% @expense_accounts.each do |account| %>
-              <tr class="border-b border-gray-100">
+              <tr class="border-b border-gray-100 dark:border-gray-700">
                 <td class="py-2 px-1">
                   <div class="flex items-center space-x-2">
-                    <%= link_to account.name, entity_account_entries_path(@entity, account), class: "text-blue-600 hover:text-blue-800 font-medium" %>
-                    <%= link_to "(Edit)", entity_account_path(@entity, account), class: "text-sm text-gray-500 hover:text-gray-700" %>
+                    <%= link_to account.name, entity_account_entries_path(@entity, account), class: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-medium transition-colors" %>
+                    <%= link_to "(Edit)", entity_account_path(@entity, account), class: "text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors" %>
                   </div>
                 </td>
-                <td class="text-right py-2 px-1 font-mono text-sm">
+                <td class="text-right py-2 px-1 font-mono text-sm text-gray-900 dark:text-white">
                   <%= number_to_currency(account.balance) %>
                 </td>
               </tr>

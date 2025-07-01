@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full" data-theme="light">
   <head>
     <title><%= content_for(:title) || "Accountingly" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -22,11 +22,52 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="min-h-screen flex flex-col">
+  <body class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
     <%= render 'shared/header' unless controller_name == 'public' %>
     <main class="container mx-auto pt-20 px-5 flex-grow">
       <%= yield %>
     </main>
     <%= render 'shared/footer' unless controller_name == 'public' %>
+    
+    <script>
+      // Dark mode functionality
+      function initTheme() {
+        const theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        if (theme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+      }
+      
+      function toggleTheme() {
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        localStorage.setItem('theme', newTheme);
+        document.documentElement.setAttribute('data-theme', newTheme);
+        
+        if (newTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+        
+        // Update theme toggle button icon
+        const themeToggle = document.getElementById('theme-toggle');
+        if (themeToggle) {
+          const icon = themeToggle.querySelector('svg');
+          if (newTheme === 'dark') {
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />';
+          } else {
+            icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />';
+          }
+        }
+      }
+      
+      // Initialize theme on page load
+      document.addEventListener('DOMContentLoaded', initTheme);
+    </script>
   </body>
 </html>

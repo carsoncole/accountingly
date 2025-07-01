@@ -2,34 +2,34 @@
 
 <div class="w-full">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <p class="py-2 px-3 bg-green-50 dark:bg-green-900/20 mb-5 text-green-500 dark:text-green-400 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
 
   <% if alert.present? %>
-    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-md inline-block" id="alert"><%= alert %></p>
+    <p class="py-2 px-3 bg-red-50 dark:bg-red-900/20 mb-5 text-red-500 dark:text-red-400 font-medium rounded-md inline-block" id="alert"><%= alert %></p>
   <% end %>
 
   <div class="flex justify-between items-center mb-6">
-    <h1 class="text-2xl font-bold text-gray-900">Entities</h1>
-    <%= link_to "New Entity", new_entity_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium" %>
+    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Entities</h1>
+    <%= link_to "New Entity", new_entity_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium transition-colors" %>
   </div>
 
-  <div class="bg-white shadow-sm rounded-lg overflow-hidden">
+  <div class="bg-white dark:bg-gray-800 shadow-sm rounded-lg overflow-hidden">
     <% if @entities.any? %>
-      <div class="divide-y divide-gray-200">
+      <div class="divide-y divide-gray-200 dark:divide-gray-700">
         <% @entities.each do |entity| %>
-          <div class="entity flex items-center justify-between p-6">
+          <div class="entity flex items-center justify-between p-6 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
             <div class="flex items-center space-x-4">
               <div class="flex-shrink-0">
-                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                  <span class="text-blue-600 font-medium text-sm"><%= entity.name.first.upcase %></span>
+                <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                  <span class="text-blue-600 dark:text-blue-400 font-medium text-sm"><%= entity.name.first.upcase %></span>
                 </div>
               </div>
               <div>
-                <h3 class="text-lg font-medium text-gray-900">
-                  <%= link_to entity.name, entity_path(entity), class: "hover:text-blue-600" %>
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white">
+                  <%= link_to entity.name, entity_path(entity), class: "hover:text-blue-600 dark:hover:text-blue-400 transition-colors" %>
                 </h3>
-                <p class="text-sm text-gray-500">
+                <p class="text-sm text-gray-500 dark:text-gray-400">
                   <%= pluralize(entity.accounts.count, 'account') %> • 
                   <%= pluralize(entity.transactions.count, 'transaction') %>
                 </p>
@@ -37,12 +37,12 @@
             </div>
             
             <div class="flex items-center space-x-3">
-              <%= link_to "Transactions", entity_transactions_path(entity), class: "text-sm text-gray-600 hover:text-blue-600" %>
+              <%= link_to "Transactions", entity_transactions_path(entity), class: "text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" %>
               <% if Current.user.administrator?(entity) %>
-                <%= link_to "Edit", edit_entity_path(entity), class: "text-sm text-gray-600 hover:text-blue-600" %>
+                <%= link_to "Edit", edit_entity_path(entity), class: "text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors" %>
                 <%= button_to "Archive", entity_path(entity), 
                     method: :delete, 
-                    class: "text-sm text-red-600 hover:text-red-800",
+                    class: "text-sm text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 transition-colors",
                     data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to archive this entity?", data_turbo: false } %>
               <% end %>
             </div>
@@ -51,8 +51,8 @@
       </div>
     <% else %>
       <div class="text-center py-12">
-        <p class="text-gray-500 text-lg">No entities found.</p>
-        <p class="text-gray-400 mt-2">Get started by creating your first entity.</p>
+        <p class="text-gray-500 dark:text-gray-400 text-lg">No entities found.</p>
+        <p class="text-gray-400 dark:text-gray-500 mt-2">Get started by creating your first entity.</p>
       </div>
     <% end %>
   </div>

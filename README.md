@@ -31,7 +31,7 @@ Visit `http://localhost:3000` in your web browser to access the application.
 
 [Kamal](https://kamal-deploy.org) can be used for deployment. Configure `deploy.yml`. Kamal utilizes `DOCKERFILE` which is configured for utilizing PostgreSQL as its database. 
 
-Create a Kamal secrets file `.kamal/secrets` . An example file is `.kamal/secrets.example`. Add your Docker password.
+Create a Kamal secrets file `.kamal/secrets` . An example file is `.kamal/secrets-example`. Add your Docker password.
 
 
 To deploy:

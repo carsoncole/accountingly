@@ -1,12 +1,12 @@
 require "test_helper"
 
 class EntryTest < ActiveSupport::TestCase
-  #FIXME: This test is failing
+  # FIXME: This test is failing
   # test "previous entry" do
   #   assert_equal entries(:expense_entry), entries(:single_entry).previous_entry
   # end
 
-  #FIXME: This test is failing
+  # FIXME: This test is failing
   # test "should have a balance" do
   #   entry = Entry.create(transaction_id: transactions(:three).id, account_id: accounts(:expense_account).id, amount: 10)
   #   assert_equal 45.5, entry.reload.balance

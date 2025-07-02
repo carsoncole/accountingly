@@ -21,6 +21,4 @@ class EntityTest < ActiveSupport::TestCase
     entity.save!
     assert entity.reload.retained_earnings_account.present?
   end
-
-  
 end

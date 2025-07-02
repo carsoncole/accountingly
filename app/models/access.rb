@@ -1,9 +1,8 @@
 class Access < ApplicationRecord
-
   belongs_to :user
   belongs_to :entity
 
-  validates :user_id, :presence => { :message => 'email is not recognized' },:uniqueness => { :scope => [:entity_id], :message => 'already granted access' }
+  validates :user_id, presence: { message: "email is not recognized" }, uniqueness: { scope: [ :entity_id ], message: "already granted access" }
 
   before_validation :find_user!
 
@@ -21,5 +20,4 @@ class Access < ApplicationRecord
       self.user_id = user.id
     end
   end
-
 end

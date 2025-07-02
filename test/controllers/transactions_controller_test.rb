@@ -26,20 +26,20 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  #FIXME: This test is failing
+  # FIXME: This test is failing
   # test "should update" do
   #   patch entity_transaction_url(@entity, transactions(:one)), params: { transaction: { description: "New Description" } }
   #   assert_redirected_to entity_transaction_url(@entity, transactions(:one))
   # end
 
   test "should create" do
-    post entity_transactions_url(@entity), params: { 
-      transaction: { 
+    post entity_transactions_url(@entity), params: {
+      transaction: {
         date: "2025-06-28", description: "New Transaction",
-        entries_attributes: { 
+        entries_attributes: {
           "0" => { account_id: accounts(:expense_account).id, amount: 100 },
           "1" => { account_id: accounts(:asset_account).id, amount: -100 }
-        } 
+        }
         }
       }
     assert_redirected_to entity_transaction_url(@entity, Transaction.last)

@@ -19,7 +19,7 @@ class TransactionTest < ActiveSupport::TestCase
 
   test "unbalanced transactions are not allowed" do
     transaction = Transaction.new(entity: entities(:ajax_company), date: Date.new(2025, 6, 1), description: "Test")
-    transaction.entries.build(account: accounts(:expense_account), amount: 100) 
+    transaction.entries.build(account: accounts(:expense_account), amount: 100)
     assert_not transaction.valid?
     assert_equal "Transaction is not balanced.", transaction.errors.full_messages.join(", ")
   end

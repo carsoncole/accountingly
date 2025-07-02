@@ -1,7 +1,6 @@
 require "test_helper"
 
 class EntriesControllerTest < ActionDispatch::IntegrationTest
-
   setup do
     sign_in
     @entity = entities(:ajax_company)
@@ -12,5 +11,4 @@ class EntriesControllerTest < ActionDispatch::IntegrationTest
     get entity_account_entries_url(@entity, @account)
     assert_response :success
   end
-
 end

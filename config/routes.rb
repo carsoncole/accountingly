@@ -12,8 +12,8 @@ Rails.application.routes.draw do
     resources :transactions do
       resources :entries
     end
-    
-    resources :statements, only: [:index] do
+
+    resources :statements, only: [ :index ] do
       collection do
         get :balance_sheet
         get :income_statement

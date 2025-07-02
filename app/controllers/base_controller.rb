@@ -1,5 +1,4 @@
 class BaseController < ApplicationController
-
   def set_last_use_entity!
     Current.user.set_last_use_entity!(entity)
   end

@@ -1,9 +1,9 @@
 class Entry < ActiveRecord::Base
-  belongs_to :transaction_new, foreign_key: 'transaction_id', class_name: 'Transaction', counter_cache: true # done this way to avoid transaction name warning
+  belongs_to :transaction_new, foreign_key: "transaction_id", class_name: "Transaction", counter_cache: true # done this way to avoid transaction name warning
   belongs_to :account
-  has_one :entity, :through => :account
+  has_one :entity, through: :account
   validates_numericality_of :amount
-  validates :account_id, :presence => true
+  validates :account_id, presence: true
 
   before_save :update_balances
   before_validation :check_if_archived
@@ -22,8 +22,8 @@ class Entry < ActiveRecord::Base
 
   def check_if_archived
     if self.is_archived?
-      errors.add :base, 'Can not add or edit entries in an archived period'
-      return false
+      errors.add :base, "Can not add or edit entries in an archived period"
+      false
     end
   end
 
@@ -39,29 +39,29 @@ class Entry < ActiveRecord::Base
   end
 
   def blank?
-    amount == 0 #&& description.empty? && attachment_file_name.nil?
+    amount == 0 # && description.empty? && attachment_file_name.nil?
   end
 
-  def self.previous_entry(account_id,date)
+  def self.previous_entry(account_id, date)
     Entry.where("transactions.date <= '#{date}' AND
-      entries.account_id = #{account_id}").order('transactions.date DESC, entries.id DESC').joins(:transaction_new).first
+      entries.account_id = #{account_id}").order("transactions.date DESC, entries.id DESC").joins(:transaction_new).first
   end
 
   def previous_entry
     Entry.where("( transactions.date < '#{transaction_new.date}' OR
       (transactions.date = '#{transaction_new.date}' AND entries.id < #{id}) ) AND
-      entries.account_id = #{account_id}").order('transactions.date DESC, entries.id DESC').joins(:transaction_new).first
+      entries.account_id = #{account_id}").order("transactions.date DESC, entries.id DESC").joins(:transaction_new).first
   end
 
-  def self.post_entries(account_id, date, id=nil)
+  def self.post_entries(account_id, date, id = nil)
     if id
       Entry.where("(
         transactions.date > ? OR
         ( transactions.date = ? AND
         entries.id > ? ) ) AND
-        entries.account_id = ?", date, date, id, account_id).order('transactions.date ASC, entries.id ASC').joins(:transaction_new)
+        entries.account_id = ?", date, date, id, account_id).order("transactions.date ASC, entries.id ASC").joins(:transaction_new)
     else
-      Entry.where("transactions.date > ? AND entries.account_id = ?", date, account_id).order('transactions.date ASC, entries.id ASC').joins(:transaction_new)
+      Entry.where("transactions.date > ? AND entries.account_id = ?", date, account_id).order("transactions.date ASC, entries.id ASC").joins(:transaction_new)
     end
   end
 
@@ -70,7 +70,7 @@ class Entry < ActiveRecord::Base
       transactions.date > ? OR
       ( transactions.date = ? AND
       entries.id > ? ) ) AND
-      entries.account_id = ?", transaction.date, transaction.date, id, account_id).order('transactions.date ASC, entries.id ASC').joins(:transaction_new)
+      entries.account_id = ?", transaction.date, transaction.date, id, account_id).order("transactions.date ASC, entries.id ASC").joins(:transaction_new)
   end
 
 
@@ -78,7 +78,7 @@ class Entry < ActiveRecord::Base
   def self.reprocess_balances(entity_id)
     accounts = Account.find_all_by_entity_id(entity_id)
     accounts.each do |a|
-      entries = Entry.find_all_by_account_id(a, :joins => :transaction_new, :order => 'transactions.date ASC, id ASC')
+      entries = Entry.find_all_by_account_id(a, joins: :transaction_new, order: "transactions.date ASC, id ASC")
       previous_balance = 0
       entries.each do |e|
         Entry.find_by_sql("UPDATE entries SET balance = #{ previous_balance + e.amount } WHERE id = #{e.id}")
@@ -90,17 +90,16 @@ class Entry < ActiveRecord::Base
   def self.reprocess_account_balances(account_id, date)
     account = Account.find(account_id)
 
-    entries = Entry.where(:account_id => account.id).where("date >= ?",date).joins(:transaction_new).order('transactions.date ASC, id ASC')
+    entries = Entry.where(account_id: account.id).where("date >= ?", date).joins(:transaction_new).order("transactions.date ASC, id ASC")
     previous_balance = entries.first.previous_entry&.balance || 0
     entries.each do |e|
       Entry.find_by_sql("UPDATE entries SET balance = #{ previous_balance + e.amount } WHERE id = #{e.id}")
       previous_balance += e.amount
     end
-
   end
 
   def self.find_entries(search)
-    #FIXME Search for example numbers with decimals broken
+    # FIXME Search for example numbers with decimals broken
     entries = []
     search.elements.each do |e|
       if numeric?(e.element)
@@ -114,11 +113,11 @@ class Entry < ActiveRecord::Base
           where("accounts.entity_id = ?", search.entity_id).
           where("LOWER(entries.description) LIKE LOWER('%#{e.element}%')").
           joins(:account)
-          # joins(:account, :transaction).
-          # order ("transactions.date DESC")
+        # joins(:account, :transaction).
+        # order ("transactions.date DESC")
       end
     end
-    return entries
+    entries
   end
 
   private
@@ -144,7 +143,7 @@ class Entry < ActiveRecord::Base
       else
         previous_balance = entries[0].previous_entry ? entries[0].previous_entry.balance : 0
       end
-      #entries.each { |entry| Entry.find_by_sql("UPDATE entries SET balance = #{ previous_balance += entry.amount } WHERE id = #{entry.id}")}
+      # entries.each { |entry| Entry.find_by_sql("UPDATE entries SET balance = #{ previous_balance += entry.amount } WHERE id = #{entry.id}")}
       entries.each do |entry|
         ActiveRecord::Base.connection.execute("UPDATE entries SET balance = #{ previous_balance += entry.amount } WHERE id = #{entry.id}")
       end
@@ -160,16 +159,16 @@ class Entry < ActiveRecord::Base
         previous_balance = 0
       end
       self.balance = previous_balance + amount
-      self.class.rebalance(:account_id => self.account_id, :date => self.transaction_new.date, :previous_balance => self.balance)
+      self.class.rebalance(account_id: self.account_id, date: self.transaction_new.date, previous_balance: self.balance)
     elsif destroyed?
-      self.class.rebalance(:account_id => self.account_id, :id => self.id, :date => self.transaction_new.date)
+      self.class.rebalance(account_id: self.account_id, id: self.id, date: self.transaction_new.date)
     elsif changed?
 
       if account_id_changed?
-        self.class.rebalance(:account_id => self.account_id_was, :id => self.id, :date => self.transaction_new.date)
+        self.class.rebalance(account_id: self.account_id_was, id: self.id, date: self.transaction_new.date)
         previous_account = Account.find(self.account_id_was)
-        if previous_account.class == 'IncomeAccount' || previous_account.class == 'ExpenseAccount'
-          related_retained_earnings_entry = Entry.where(:related_entry_id => self.id)
+        if previous_account.class == "IncomeAccount" || previous_account.class == "ExpenseAccount"
+          related_retained_earnings_entry = Entry.where(related_entry_id: self.id)
           related_retained_earnings_entry.destroy if related_retained_earning_entry
         end
       end
@@ -180,9 +179,9 @@ class Entry < ActiveRecord::Base
         previous_balance = 0
       end
       self.balance = previous_balance + amount
-      self.class.rebalance(:account_id => self.account_id, :date => self.transaction_new.date, :previous_balance => self.balance)
+      self.class.rebalance(account_id: self.account_id, date: self.transaction_new.date, previous_balance: self.balance)
     end
-    return true
+    true
   end
 
   def clone_income_and_expense_to_equity
@@ -192,7 +191,7 @@ class Entry < ActiveRecord::Base
       cloned_entry.account_id = retained_earnings_account.id
       cloned_entry.amount = self.amount
       cloned_entry.description = self.description
-      cloned_entry.entry_type = 'Closing'
+      cloned_entry.entry_type = "Closing"
       cloned_entry.save
 
     elsif account.class == ExpenseAccount
@@ -201,7 +200,7 @@ class Entry < ActiveRecord::Base
       cloned_entry.account_id = retained_earnings_account.id
       cloned_entry.amount = -self.amount
       cloned_entry.description = self.description
-      cloned_entry.entry_type = 'Closing'
+      cloned_entry.entry_type = "Closing"
       cloned_entry.save
 
     elsif account_id_changed? && !account_id_was.nil? && (
@@ -214,6 +213,4 @@ class Entry < ActiveRecord::Base
     else
     end
   end
-
-
 end

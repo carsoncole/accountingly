@@ -4,107 +4,105 @@ class User < ApplicationRecord
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
 
-  has_many :accesses, :dependent => :destroy
-  has_many :entities, :through => :accesses
+  has_many :accesses, dependent: :destroy
+  has_many :entities, through: :accesses
 
   def name
     email_address
   end
 
   def permission(entity)
-    return Access.where(:user_id => self.id, :entity_id => entity.id).first.permission
+    Access.where(user_id: self.id, entity_id: entity.id).first.permission
   end
 
   def super_administrator?(entity)
-    if Access.where(:user_id => self.id).where(:entity_id => entity.id).where(type: 'Super Administrator').first
-      return true
+    if Access.where(user_id: self.id).where(entity_id: entity.id).where(type: "Super Administrator").first
+      true
     else
-      return false
+      false
     end
   end
 
   def administrator?(entity)
-    if Access.where(:user_id => self.id).where(:entity_id => entity.id).where(type: 'AdministratorAccess').first
-      return true
+    if Access.where(user_id: self.id).where(entity_id: entity.id).where(type: "AdministratorAccess").first
+      true
     else
-      return false
+      false
     end
   end
 
   def administrator_or_higher?(entity)
-    permission = Assignment.where(:user_id => self.id).where(:entity_id => entity.id).first.permission
-    if permission == 'Administrator' || permission == 'Super Administrator'
-      return true
+    permission = Assignment.where(user_id: self.id).where(entity_id: entity.id).first.permission
+    if permission == "Administrator" || permission == "Super Administrator"
+      true
     else
-      return false
+      false
     end
   end
 
   def editor?(entity)
-    if Assignment.where(:user_id => self.id).where( :entity_id => entity.id).first.permission == 'Editor'
-      return true
+    if Assignment.where(user_id: self.id).where(entity_id: entity.id).first.permission == "Editor"
+      true
     else
-      return false
+      false
     end
   end
 
   def editor_or_higher?(entity)
-    permission = Assignment.where(:user_id => self.id).where(:entity_id => entity.id).first.permission
-    if permission == 'Editor' || administrator_or_higher?(entity)
-      return true
+    permission = Assignment.where(user_id: self.id).where(entity_id: entity.id).first.permission
+    if permission == "Editor" || administrator_or_higher?(entity)
+      true
     else
-      return false
+      false
     end
   end
 
 
   def reader?(entity)
-    if Assignment.where(:user_id => self.id).where(:entity_id => entity.id).first.permission == 'Reader'
-      return true
+    if Assignment.where(user_id: self.id).where(entity_id: entity.id).first.permission == "Reader"
+      true
     else
-      return false
+      false
     end
   end
 
   def reader_or_higher?(entity)
-    permission = Assignment.where(:user_id => self.id).where(:entity_id => entity.id).first.permission
-    if permission == 'Reader' || editor_or_higher?(entity)
-      return true
+    permission = Assignment.where(user_id: self.id).where(entity_id: entity.id).first.permission
+    if permission == "Reader" || editor_or_higher?(entity)
+      true
     else
-      return false
+      false
     end
   end
 
   def author?(entity)
-    if Assignment.where(:user_id => self.id).where( :entity_id => entity.id).first.permission == 'Author'
-      return true
+    if Assignment.where(user_id: self.id).where(entity_id: entity.id).first.permission == "Author"
+      true
     else
-      return false
+      false
     end
   end
 
   def author_or_higher?(entity)
-    permission = Assignment.where(:user_id => self.id).where(:entity_id => entity.id).first.permission
-    if permission == 'Author' || editor_or_higher?(entity)
-      return true
+    permission = Assignment.where(user_id: self.id).where(entity_id: entity.id).first.permission
+    if permission == "Author" || editor_or_higher?(entity)
+      true
     else
-      return false
+      false
     end
   end
 
-  def set_last_use_entity!(entity=nil)
+  def set_last_use_entity!(entity = nil)
     return unless entity
     update_attribute(:last_use_entity_id, entity.id)
   end
 
   def transactions(entity)
     if reader_or_higher?(entity)
-      transactions = Transaction.where(:entity_id => entity)
+      transactions = Transaction.where(entity_id: entity)
     elsif author?(entity)
-      transactions = Transaction.where(:entity_id => entity).where(:user_id => self.id)
+      transactions = Transaction.where(entity_id: entity).where(user_id: self.id)
     end
-    return transactions
+    transactions
   end
-
-
 end

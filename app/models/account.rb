@@ -14,11 +14,16 @@ class Account < ApplicationRecord
   validates :name, :length => { :maximum => 30 }
   validates_numericality_of :rank
 
+  def archived?(date)
+    ArchiveDate.where("entity_id= ? AND start_date <= ? AND end_date >= ?",
+        entity_id, date, date).any? ? true : false
+  end
+
   def addition_or_subtraction
     case type
-    when 'Asset', 'Expense'
+    when 'AssetAccount', 'ExpenseAccount'
       1
-    when 'Liability', 'Income', 'Equity'
+    when 'LiabilityAccount', 'IncomeAccount', 'EquityAccount'
       -1
     else
       1

@@ -20,7 +20,7 @@ class EntryTest < ActiveSupport::TestCase
 
   test "reprocess account balance" do
     Entry.reprocess_account_balances(accounts(:expense_account).id, Date.new(2020, 1, 1))
-    assert_equal 20, entries(:single_entry).balance
+    assert_equal 100, entries(:single_entry).balance
   end
 
   # test "reprocess account balance with new entry" do

@@ -40,7 +40,6 @@ class TransactionTest < ActiveSupport::TestCase
     # Record the cost of goods sold
     transaction.entries.build(account: accounts(:asset_account), amount: -10, description: "Inventory")
     transaction.entries.build(account: accounts(:expense_account), amount: 10, description: "Cost of goods sold")
-    puts transaction.total_balance
 
     assert transaction.valid?
   end
@@ -52,17 +51,15 @@ class TransactionTest < ActiveSupport::TestCase
     assert transaction.valid?
   end
 
-  #TODO: This does not stop changing transactions that are in archived period to unarchived period
-  # test "transactions can not be updated during archive period" do
-  #   transaction = transactions(:archived_transaction)
-  #   assert_not transaction.update(date: Date.new(2025, 6, 1))
-  #   assert_equal "Date is within an archived period.", transaction.errors.full_messages.join(", ")
-  # end
+  test "transactions can not be updated during archive period" do
+    transaction = transactions(:archived_transaction)
+    assert_not transaction.update(date: Date.new(2025, 6, 1))
+    assert_equal "Date is within an archived period.", transaction.errors.full_messages.join(", ")
+  end
 
-  #TODO: This does not stop destroying transactions that are in archived period
-  # test "transactions can not be destroyed during archive period" do
-  #   transaction = transactions(:archived_transaction)
-  #   assert_not transaction.destroy
-  #   assert_equal "Date is within an archived period.", transaction.errors.full_messages.join(", ")
-  # end
+  test "transactions can not be destroyed during archive period" do
+    transaction = transactions(:archived_transaction)
+    assert_not transaction.destroy
+    assert_equal "Date is within an archived period.", transaction.errors.full_messages.join(", ")
+  end
 end

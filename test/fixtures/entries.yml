@@ -3,18 +3,18 @@
 expense_entry:
   transaction_new: expense_transaction
   account: expense_account
-  amount: 10
-  balance: 10
+  amount: 90
+  balance: 90
 cash_entry:
   transaction_new: expense_transaction
   account: asset_account
-  amount: -10
-  balance: -10
+  amount: -90
+  balance: -90
 equity_entry:
   transaction_new: expense_transaction
   account: equity_account
-  amount: -10
-  balance: 10
+  amount: -90
+  balance: 90
 single_entry:
   transaction_new: single_entry_transaction
   account: expense_account

@@ -2,7 +2,7 @@
 
 expense_account:
   type: ExpenseAccount
-  name: Cable Company Expense
+  name: Cable Company
   entity: ajax_company
 income_account:
   type: IncomeAccount

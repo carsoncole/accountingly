@@ -6,8 +6,8 @@ class Transaction < ApplicationRecord
   belongs_to :entity
   before_validation :remove_blank_entries!
   validate :must_be_balanced
-  validate :not_in_archived_period
-  before_destroy :not_in_archived_period
+  validate :check_not_in_archived_period
+  before_destroy :check_destroy_not_in_archived_period
   validates :entity_id, :description, :date, presence: true
 
   def balanced?
@@ -20,7 +20,7 @@ class Transaction < ApplicationRecord
 
   def total_balance
     total = 0
-    entries.each { |e| total += e.account.addition_or_subtraction * e.amount unless e.account.name == 'Retained earnings' }
+    entries.each { |e| total += e.account.addition_or_subtraction * e.amount unless e.account.type == 'EquityAccount' }
     return total
   end
 
@@ -38,8 +38,10 @@ class Transaction < ApplicationRecord
   end
 
   def archived?
-    ArchiveDate.where("entity_id= ? AND start_date <= ? AND end_date >= ?",
-        entity_id, date, date).any? ? true : false
+    (ArchiveDate.where("entity_id= ? AND start_date <= ? AND end_date >= ?",
+        entity_id, date, date).any? ? true : false) || 
+    (date_changed? && ArchiveDate.where("entity_id= ? AND start_date <= ? AND end_date >= ?",
+        entity_id, date_was, date_was).any? ? true : false)
   end
 
   # Temporary method (Trash at some point) to fix equity postings
@@ -68,9 +70,17 @@ class Transaction < ApplicationRecord
     end
   end
 
-  def not_in_archived_period
+  def check_not_in_archived_period
     if archived?
       errors.add(:date, "is within an archived period.")
+      return false
+    end
+  end
+
+  def check_destroy_not_in_archived_period
+    if archived?
+      errors.add(:date, "is within an archived period.")
+      throw :abort
     end
   end
 

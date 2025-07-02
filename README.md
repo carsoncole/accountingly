@@ -1,10 +1,9 @@
 # Accountingly
 
 ## Description
-Accountingly is an application designed to help users manage their financial accounts efficiently. It provides tools for tracking expenses, managing budgets, and generating reports.
+Accountingly is an application designed to help users manage financial accounts efficiently. It provides tools for tracking expenses, managing budgets, and generating income statements and balance sheet reports.
 
 ## Table of Contents
-- [Description](#description)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
@@ -27,6 +26,17 @@ rails server
 ```
 
 Visit `http://localhost:3000` in your web browser to access the application.
+
+## Deployment
+
+[Kamal](https://kamal-deploy.org) can be used for deployment. Configure `deploy.yml`. Kamal utilizes `DOCKERFILE` which is configured for utilizing PostgreSQL as its database. 
+
+To deploy:
+```ruby
+kamal setup
+kamal details
+kamal deploy
+```
 
 ## Contributing
 We welcome contributions from the community. To contribute, please follow these steps:
